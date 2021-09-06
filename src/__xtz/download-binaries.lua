@@ -10,7 +10,8 @@ local function _download(url, dst, options)
         fs.remove(_tmpFile)
         ami_error("Failed to download: " .. tostring(_error))
     end
-	fs.move(_tmpFile, dst)
+    ami_assert(fs.safe_copy_file(_tmpFile, dst), "Failed to copy downloaded file into '" .. tostring(dst) .. "'!")
+	fs.safe_remove(_tmpFile)
 end
 
 local _wantedBinaries = am.app.get_model("WANTED_BINARIES")
