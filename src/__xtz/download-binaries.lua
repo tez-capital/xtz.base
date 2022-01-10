@@ -1,5 +1,6 @@
 assert(fs.EFS, "eli.fs.extra required")
 
+local _, _ = fs.safe_remove("bin", { contentOnly = true, recurse = true, followLinks = true })
 local _ok, _error = fs.safe_mkdirp("bin")
 ami_assert(_ok, string.join_strings("Failed to prepare bin dir: ", _error), EXIT_APP_IO_ERROR)
 
