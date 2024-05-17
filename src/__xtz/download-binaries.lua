@@ -36,7 +36,7 @@ ami_assert(_ok, "Failed to enumerate binaries", EXIT_APP_IO_ERROR)
 
 for _, file in ipairs(_files) do 
     if fs.file_type(file) == 'file' then 
-        local _ok, _error = fs.safe_chmod(file, "rwxrwxrwx")
+        local _ok, _error = fs.safe_chmod(file, "rwxr-xr-x")
         if not _ok then 
             ami_error("Failed to set file permissions for " .. file .. " - " .. _error, EXIT_APP_IO_ERROR)
         end
