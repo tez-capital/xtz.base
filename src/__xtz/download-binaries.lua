@@ -31,10 +31,10 @@ for _, _binaryName in ipairs(_wantedBinaries) do
 	end
 end
 
-local _ok, _files = fs.safe_read_dir("bin", { returnFullPaths = true})
+local _ok, files = fs.safe_read_dir("bin", { returnFullPaths = true}) --[=[@as string[]]=]
 ami_assert(_ok, "Failed to enumerate binaries", EXIT_APP_IO_ERROR)
 
-for _, file in ipairs(_files) do 
+for _, file in ipairs(files) do 
     if fs.file_type(file) == 'file' then 
         local _ok, _error = fs.safe_chmod(file, "rwxr-xr-x")
         if not _ok then 
