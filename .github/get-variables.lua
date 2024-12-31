@@ -1,8 +1,8 @@
 local hjson = require"hjson"
 local io = require"io"
 
-local specs_content = fs.read_file("./src/specs.json")
-local specs = hjson.parse(specs_content)
+local specs_raw = fs.read_file("./src/specs.json")
+local specs = hjson.parse(specs_raw)
 
 print("ID=" .. specs.id)
 print("VERSION=" .. specs.version)
