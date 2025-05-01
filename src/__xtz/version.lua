@@ -25,18 +25,28 @@ end
 
 local function get_binary_versions()
     local collected = {}
-    local binaries = fs.read_dir("bin")
 
-    for _, binary in ipairs(binaries) do
-        local result = proc.spawn("bin/" .. binary, { 
+    local wanted_binaries = am.app.get_model("WANTED_BINARIES", {})
+    ami_assert(type(wanted_binaries) == "table", "Invalid list of wanted binaries!")
+
+    for _, binary_name in ipairs(wanted_binaries) do
+        local ok, result = proc.safe_spawn("bin/" .. binary_name, {
             args = { "--version" },
             stdio = "pipe",
             wait = true,
             env = { HOME = path.combine(os.cwd(), "data") }
         }) --[[@as SpawnResult]]
-        ami_assert(result and result.exit_code == 0, "failed to check version of " .. binary)
+        if not ok or not result then
+            collected[binary_name] = "unknown (spawn error - " .. tostring(result) .. ")"
+            goto continue
+        end
+        if result.exit_code ~= 0 then
+            collected[binary_name] = "unknown (exit code: ".. tostring(result.exit_code) .. ")"
+            goto continue
+        end
         local output = result.stdout_stream:read("a")
-        collected[binary] = output:match("^%s*(.-)%s*$")
+        collected[binary_name] = output:match("^%s*(.-)%s*$")
+        ::continue::
     end
     return collected
 end
