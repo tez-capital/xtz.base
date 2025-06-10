@@ -30,14 +30,14 @@ local function get_binary_versions()
     ami_assert(type(wanted_binaries) == "table", "Invalid list of wanted binaries!")
 
     for _, binary_name in ipairs(wanted_binaries) do
-        local ok, result = proc.safe_spawn("bin/" .. binary_name, {
+        local result, err = proc.spawn("bin/" .. binary_name, {
             args = { "--version" },
             stdio = "pipe",
             wait = true,
             env = { HOME = path.combine(os.cwd(), "data") }
         }) --[[@as SpawnResult]]
-        if not ok or not result then
-            collected[binary_name] = "unknown (spawn error - " .. tostring(result) .. ")"
+        if not result then
+            collected[binary_name] = "unknown (spawn error - " .. tostring(err) .. ")"
             goto continue
         end
         if result.exit_code ~= 0 then
