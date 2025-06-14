@@ -1,3 +1,5 @@
+local hjson = require "hjson"
+
 -- validate version
 local specs_rwa = fs.read_file("src/specs.json")
 local specs = hjson.parse(specs_rwa)
