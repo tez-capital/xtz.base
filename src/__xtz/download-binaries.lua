@@ -32,7 +32,7 @@ for _, binary_name in ipairs(wanted_binaries) do
 end
 
 local files, err = fs.read_dir("bin", { return_full_paths = true }) --[=[@as string[]]=]
-ami_assert(files, "Failed to enumerate binaries", EXIT_APP_IO_ERROR)
+ami_assert(files, "Failed to enumerate binaries - " .. tostring(err), EXIT_APP_IO_ERROR)
 
 for _, file in ipairs(files) do 
     if fs.file_type(file) == 'file' then 
