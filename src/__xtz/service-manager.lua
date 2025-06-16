@@ -38,10 +38,10 @@ function service_manager.install_services(services_definition)
 end
 
 ---@param names string[]|table<string, string>
----@return string[]
+---@return string[]|table<string, string>
 function service_manager.get_installed_services(names)
 	local result = {}
-	for _, service in pairs(names) do
+	for k, service in pairs(names) do
 		-- skip false values
 		if type(service) ~= "string" then
 			log_warn("skipping invalid service name: " .. tostring(service) .. ", type: " .. type(service))
@@ -49,7 +49,7 @@ function service_manager.get_installed_services(names)
 		end
 		local is_installed = service_manager.is_service_installed(service)
 		if is_installed then
-			table.insert(result, service)
+			result[k] = service
 		end
 		::CONTINUE::
 	end
