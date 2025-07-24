@@ -146,11 +146,14 @@ function service_manager.have_all_services_status(names, expected_status)
 	return true
 end
 
+---@class RemoveServicesOptions
+---@field container string? user name of systemd container service was installed in (systemd only)
+
 ---@param names string[]|table<string, string>
-function service_manager.remove_services(names)
+function service_manager.remove_services(names, options)
 	for _, service in pairs(names) do
 		if type(service) ~= "string" then goto CONTINUE end
-		local ok, err = service_manager.safe_remove_service(service)
+		local ok, err = service_manager.safe_remove_service(service, options)
 		ami_assert(ok, "failed to remove service '" .. service .. "': " .. tostring(err))
 		::CONTINUE::
 	end
