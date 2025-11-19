@@ -8,7 +8,7 @@ local user_plugin, err = am.plugin.get("user")
 ami_assert(user_plugin, "failed to load user plugin - " .. tostring(err), EXIT_PLUGIN_LOAD_ERROR)
 
 log_info("checking user '" .. user .. "' availability...")
-local ok = user_plugin.add(user, { disable_login = true, disable_password = true, gecos = "" })
+local ok = user_plugin.add(user, { disable_login = true, disable_password = true, fullname = "tezbake operator" })
 ami_assert(ok, "failed to create user - " .. user)
 
 local ok = user_plugin.add_group(user)
