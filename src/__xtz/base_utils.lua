@@ -11,11 +11,11 @@ function utils.setup_file_ownership()
     ami_assert(type(custom_ownership) == "table", "invalid CUSTOM_FILE_OWNERSHIP configuration")
 
 	log_info("Granting access to " .. user .. "(" .. tostring(uid) .. ")...")
-	local ok, error = fs.chown(os.cwd(), uid, uid, { recurse = true, recurse_ignore_errors = true, filter = function(path)
+	local ok, error = fs.chown(os.cwd(), uid, uid, { recurse = true, recurse_ignore_errors = true, skip = function(path)
         if custom_ownership[path] ~= nil then
-            return false
+            return true
         end
-        return true
+        return false
     end })
     ami_assert(ok, "failed to chown data - " .. (error or ""))
 
