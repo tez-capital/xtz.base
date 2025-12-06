@@ -79,7 +79,7 @@ function service_manager.stop_services(names)
 			goto CONTINUE
 		end
 		local ok, err = service_manager.safe_stop_service(service)
-		ami_assert(ok, "Failed to start " .. service .. ": " .. (err or ""))
+		ami_assert(ok, "Failed to stop " .. service .. ": " .. (err or ""))
 		::CONTINUE::
 	end
 end

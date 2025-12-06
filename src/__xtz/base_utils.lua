@@ -31,7 +31,7 @@ function utils.setup_file_ownership()
         local ok, error = fs.chown(path, custom_uid, custom_gid, { recurse = true, recurse_ignore_errors = true })
         ami_assert(ok, "failed to chown " .. path .. " - " .. (error or ""))
         ::continue::
-    end	
+    end
 end
 
 function utils.setup_file_permissions()
