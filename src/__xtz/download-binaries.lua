@@ -29,7 +29,7 @@ for _, binary_name in ipairs(wanted_binaries) do
         download(source, "bin/" .. binary_name)
     elseif type(source) == "table" then
         local url = source.url
-        local mirror_name = os.getenv("TEZBAKE_PACKAGE_MIRROR")
+        local mirror_name = os.getenv("OCTEZ_RELEASES_MIRROR")
         if mirror_name and #mirror_name > 0 and type(source.mirrors) == "table" then
             local mirror_url = source.mirrors[mirror_name]
             if type(mirror_url) == "string" and #mirror_url > 0 then
