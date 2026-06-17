@@ -35,7 +35,8 @@ if update_content then
                 local base_entry = download_urls[binary_name]
                 local base_version = (type(base_entry) == "table" and base_entry.version) or "0.0.0"
                 -- ver.compare: returns 1 if v1 > v2
-                if ver.compare(update_entry.version, base_version) > 0 then
+                local ok, compare_result = pcall(ver.compare, update_entry.version, base_version)
+                if ok and compare_result > 0 then
                     log_debug("Using updated " ..
                         binary_name .. " (version " .. update_entry.version .. " > " .. base_version .. ")")
                     download_urls[binary_name] = update_entry
